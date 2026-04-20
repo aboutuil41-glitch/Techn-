@@ -42,16 +42,4 @@ class Submission extends Model
     {
         return $this->hasMany(Like::class);
     }
-
-    // --- Helpers ---
-
-    public function getLikeCount(): int
-    {
-        return $this->like_count;
-    }
-
-    public function isLikedBy(int $userId): bool
-    {
-        return $this->likes()->where('user_id', $userId)->exists();
-    }
 }

@@ -37,10 +37,4 @@ class QuizAttempt extends Model
         return $this->belongsTo(Quiz::class);
     }
 
-    // --- Helpers ---
-
-    public function checkPass(): bool
-    {
-        return $this->score >= $this->quiz->passing_score;
-    }
 }
