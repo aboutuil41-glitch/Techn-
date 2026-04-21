@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class GamificationService{
 
-public function awardXp($user, $amount){
+public function awardXp($user, int $amount){
 
 if($amount <= 0){
     return;
@@ -22,7 +22,7 @@ public function passQuiz($user){
     $this->awardXp($user, 30);
 }
 
-public function getLevel($xp){
+public function getLevel(int $xp){
 
 $level = 1;
 $requiredXp = 100;
@@ -39,7 +39,7 @@ return $level;
 }
 
 
-public function getTitle($level){
+public function getTitle(int $level){
 
 return match (true){
     $level >= 15 => 'Master',
@@ -55,7 +55,8 @@ return match (true){
             ->with('lessons:id,module_id')
             ->get()
             ->flatMap(fn($module) => $module->lessons->pluck('id'))
-            ->unique();
+            ->unique()
+            ->values();
 
         if ($lessonIds->isEmpty()) {
             return;

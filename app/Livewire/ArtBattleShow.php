@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\GamificationService;
 use App\Models\ArtBattle;
 use App\Models\Submission;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ class ArtBattleShow extends Component
         $this->battle = $battle;
     }
 
-    public function save(): void
+    public function save(GamificationService $gamification): void
     {
         if (! Auth::check()) {
             return;
@@ -55,6 +56,8 @@ class ArtBattleShow extends Component
             'title' => $validated['title'],
             'image_path' => $this->image->store('submissions', 'public'),
         ]);
+
+        $gamification->awardXp(Auth::user(), 50);
 
         $this->reset(['title', 'image']);
 

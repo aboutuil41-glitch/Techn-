@@ -2,11 +2,10 @@
 
 namespace App\Livewire;
 
-use App\Models\Certificate;
+use App\Services\GamificationService;
 use App\Models\Lesson as LessonModel;
 use App\Models\Quiz;
 use App\Models\QuizAttempt;
-use App\Models\UserProgress;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -38,7 +37,7 @@ class Lesson extends Component
         $this->passed = false;
     }
 
-    public function submitQuiz(): void
+    public function submitQuiz(GamificationService $gamification): void
     {
         if (! $this->quiz) {
             return;
@@ -61,6 +60,11 @@ class Lesson extends Component
 
         $this->passed = $this->score >= $this->quiz->passing_score;
 
+        $alreadyPassed = QuizAttempt::where('user_id', Auth::id())
+                        ->where('quiz_id', $this->quiz->id)
+                        ->where('passed', true)
+                        ->exists();
+        
         QuizAttempt::create([
             'user_id' => Auth::id(),
             'quiz_id' => $this->quiz->id,
@@ -71,6 +75,13 @@ class Lesson extends Component
 
         if ($this->passed) {
             $this->lesson->markComplete(Auth::id());
+
+            $gamification->awardXp(Auth::user(), 20);
+            $gamification->earnCertificate(Auth::user(), $this->lesson->module->learningPath);
+
+            if (! $alreadyPassed) {
+                $gamification->passQuiz(Auth::user());
+            }
         }
 
         $this->quizSubmitted = true;
@@ -85,10 +96,12 @@ class Lesson extends Component
         $this->passed = false;
     }
 
-    public function markDone(): void
+    public function markDone(GamificationService $gamification): void
     {
         $this->lesson->markComplete(Auth::id());
-
+        $gamification->awardXp(Auth::user(), 20);
+        $gamification->earnCertificate(Auth::user(), $this->lesson->module->learningPath);
+        
         $this->redirect(route('learning-path.show', $this->lesson->module->learning_path_id));
     }
 
