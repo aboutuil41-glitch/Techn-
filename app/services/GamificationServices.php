@@ -1,7 +1,9 @@
 <?php
-namespace App\services;
+namespace App\Services;
 
-
+use App\Models\Certificate;
+use App\Models\UserProgress;
+use Illuminate\Support\Str;
 
 class GamificationServices{
 
@@ -12,7 +14,7 @@ if($amount <= 0){
 }
 $user->xp += $amount;
 $user->level = $this->getLevel($user->xp);
-$user->title = $this->getTitle($user->title);
+$user->title = $this->getTitle($user->level);
 $user->save();
 }
 
@@ -46,6 +48,45 @@ return match (true){
     default      => 'Beginner',
 };
 }
+
+    public function earnCertificate($user, $path)
+    {
+        $lessonIds = $path->modules()
+            ->with('lessons:id,module_id')
+            ->get()
+            ->flatMap(fn($module) => $module->lessons->pluck('id'))
+            ->unique();
+
+        if ($lessonIds->isEmpty()) {
+            return;
+        }
+
+        $completedLessons = UserProgress::where('user_id', $user->id)
+            ->whereIn('lesson_id', $lessonIds)
+            ->where('completed', true)
+            ->count();
+
+        if ($completedLessons !== $lessonIds->count()) {
+            return;
+        }
+
+        $alreadyHasCertificate = Certificate::where('user_id', $user->id)
+            ->where('learning_path_id', $path->id)
+            ->exists();
+
+        if ($alreadyHasCertificate) {
+            return;
+        }
+
+        $this->awardXp($user, 200);
+
+        Certificate::create([
+            'user_id' => $user->id,
+            'learning_path_id' => $path->id,
+            'certificate_code' => 'TECH-' . now()->format('Y') . '-' . Str::upper(Str::random(10)),
+            'issued_at' => now(),
+        ]);
+    }
 }
 
 ?>
