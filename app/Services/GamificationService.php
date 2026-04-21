@@ -5,7 +5,7 @@ use App\Models\Certificate;
 use App\Models\UserProgress;
 use Illuminate\Support\Str;
 
-class GamificationServices{
+class GamificationService{
 
 public function awardXp($user, $amount){
 
