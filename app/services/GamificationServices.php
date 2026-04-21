@@ -12,7 +12,8 @@ if($amount <= 0){
 }
 $user->xp += $amount;
 $user->level = $this->getLevel($user->xp);
-
+$user->title = $this->getTitle($user->title);
+$user->save();
 }
 
 public function passQuiz($user){
@@ -36,7 +37,15 @@ return $level;
 }
 
 
+public function getTitle($level){
 
+return match (true){
+    $level >= 15 => 'Master',
+    $level >= 10 => 'Artist',
+    $level >= 5  => 'Sketcher',
+    default      => 'Beginner',
+};
+}
 }
 
 ?>
