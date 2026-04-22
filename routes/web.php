@@ -8,6 +8,7 @@ use App\Livewire\Home;
 use App\Livewire\LearningPath;
 use App\Livewire\LearningPathList;
 use App\Livewire\Lesson;
+use App\Livewire\Profile;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,9 +20,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', Profile::class)->name('profile');
 
     Route::get('/home', Home::class)->name('home');
     Route::get('/list', LearningPathList::class)->name('list');
