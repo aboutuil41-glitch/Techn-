@@ -27,7 +27,7 @@ class Quiz extends Model
 
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class)->whereHas('options')->orderBy('id', 'desc');
     }
 
     public function attempts()
