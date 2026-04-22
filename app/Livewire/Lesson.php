@@ -25,7 +25,12 @@ class Lesson extends Component
     public function mount(LessonModel $lesson): void
     {
         $this->lesson = $lesson;
-        $this->quiz = $lesson->quizzes()->with('questions.options')->first();
+        $this->quiz = $lesson->quizzes()
+            ->with([
+                'questions' => fn ($q) => $q->orderBy('id', 'desc'),
+                'questions.options' => fn ($q) => $q->orderBy('id', 'desc'),
+            ])
+            ->first();
     }
 
     public function startQuiz(): void
