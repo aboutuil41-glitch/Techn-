@@ -65,15 +65,4 @@ class User extends Authenticatable
         return $this->hasMany(QuizAttempt::class);
     }
 
-    // --- Helpers ---
-
-    public function getTitle(): string
-    {
-        return $this->title ?? 'Beginner';
-    }
-
-    public function getLevelFromXp(): int
-    {
-        return (int) floor($this->xp / 100) + 1;
-    }
 }
