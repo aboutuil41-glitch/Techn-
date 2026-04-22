@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedInteger('xp')->default(0);
             $table->unsignedInteger('level')->default(1);
             $table->string('title')->default('Beginner');
-            $table->string('rating_source')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
