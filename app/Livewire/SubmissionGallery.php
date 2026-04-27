@@ -46,7 +46,6 @@ class SubmissionGallery extends Component
     {
         $submissions = Submission::with('user')
             ->where('art_battle_id', $this->battleId)
-            ->orderByDesc('like_count')
             ->latest()
             ->get();
 

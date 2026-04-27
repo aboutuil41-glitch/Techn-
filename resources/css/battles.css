@@ -1,0 +1,411 @@
+/* battles.css — art-battle-show + submission-gallery */
+
+/* ── Flash banners ─────────────────────────────────────── */
+.flash-banner {
+    transition: opacity .45s ease, transform .45s ease;
+}
+.flash-banner.fade-out {
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+}
+
+/* ── Hero meta strip ───────────────────────────────────── */
+.battle-meta-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1.5rem 2.5rem;
+}
+@media (min-width: 1024px) {
+    .battle-meta-strip {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+.battle-meta-box {
+    background: #FFFDFC;
+    border: 1px solid #E8D7DB;
+    border-radius: 1.35rem;
+    padding: 1.1rem 1.25rem;
+}
+.battle-meta-box .meta-label {
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #A58A99;
+}
+.battle-meta-box .meta-value {
+    margin-top: .6rem;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #4A3050;
+}
+/* countdown box */
+.battle-meta-box.countdown-box {
+    background: #FAEAEA;
+    border-color: #F0DDE0;
+    grid-column: span 2;
+}
+@media (min-width: 1024px) {
+    .battle-meta-box.countdown-box {
+        grid-column: span 1;
+    }
+}
+.battle-meta-box.countdown-box .meta-label {
+    color: #D97786;
+}
+.countdown-display {
+    margin-top: .6rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: #A62F24;
+    letter-spacing: .04em;
+}
+
+/* ── Submission card (my submission) ───────────────────── */
+.my-submission-img {
+    width: 100%;
+    height: 22rem;
+    object-fit: cover;
+    border-radius: 1.6rem;
+    display: block;
+}
+
+/* ── Upload dropzone ───────────────────────────────────── */
+.upload-dropzone {
+    position: relative;
+    border: 2px dashed #E3D0D4;
+    border-radius: 1.45rem;
+    background: #FFFDFC;
+    padding: 2.75rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .25s, background .25s, box-shadow .25s;
+}
+.upload-dropzone:hover,
+.upload-dropzone:focus-within {
+    border-color: #C0392B;
+    background: #FDF6F5;
+    box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.07);
+}
+.upload-dropzone.dragover {
+    border-color: #C0392B;
+    background: #FDF0EE;
+    box-shadow: 0 0 0 6px rgba(192, 57, 43, 0.10);
+}
+.upload-dropzone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+.upload-dropzone-icon {
+    width: 3rem;
+    height: 3rem;
+    margin: 0 auto .85rem;
+    background: linear-gradient(135deg, #F4D4D9 0%, #FAEAEA 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #C0392B;
+    box-shadow: 0 4px 12px rgba(192, 57, 43, 0.15);
+    transition: transform .2s;
+}
+.upload-dropzone:hover .upload-dropzone-icon,
+.upload-dropzone:focus-within .upload-dropzone-icon {
+    transform: translateY(-2px) scale(1.06);
+}
+.upload-dropzone-icon svg {
+    width: 1.35rem;
+    height: 1.35rem;
+}
+.upload-dropzone-text {
+    font-size: .875rem;
+    color: #8A7090;
+    line-height: 1.7;
+}
+.upload-dropzone-text strong {
+    color: #C0392B;
+    font-weight: 600;
+}
+.upload-dropzone-hint {
+    margin-top: .5rem;
+    font-size: .75rem;
+    color: #B9A6B0;
+    letter-spacing: .02em;
+}
+
+/* ── Winners podium ────────────────────────────────────── */
+.winner-rank-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    border-radius: 999px;
+    padding: .3rem .9rem;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #fff;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0,0,0,.18);
+}
+.winner-rank-badge.rank-1 {
+    background: linear-gradient(135deg, #C4996B 0%, #D4A96B 100%);
+}
+.winner-rank-badge.rank-2 {
+    background: linear-gradient(135deg, #8A7090 0%, #A080A0 100%);
+}
+.winner-rank-badge.rank-3 {
+    background: linear-gradient(135deg, #C0392B 0%, #A62F24 100%);
+}
+
+/* podium crown for 1st place article */
+.winner-article-first {
+    position: relative;
+}
+.winner-article-first::before {
+    content: '♛';
+    position: absolute;
+    top: -1.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.4rem;
+    color: #C4996B;
+    filter: drop-shadow(0 2px 4px rgba(196,153,107,.4));
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ── Gallery card ──────────────────────────────────────── */
+.gallery-card {
+    overflow: hidden;
+    border-radius: 1.75rem;
+    border: 1px solid #E8D7DB;
+    background: #FFFCFA;
+    transition: transform .22s ease, box-shadow .22s ease;
+}
+.gallery-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 60px rgba(192, 57, 43, 0.13);
+}
+.gallery-card-img-wrap {
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+}
+.gallery-card-img-wrap img {
+    width: 100%;
+    height: 14rem;
+    object-fit: cover;
+    display: block;
+    transition: transform .38s ease;
+}
+.gallery-card:hover .gallery-card-img-wrap img {
+    transform: scale(1.05);
+}
+.gallery-card-overlay {
+    position: absolute;
+    inset-x: 0;
+    bottom: 0;
+    height: 8rem;
+    background: linear-gradient(to top, rgba(0,0,0,.60), transparent);
+    pointer-events: none;
+}
+.gallery-card-meta {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: .5rem;
+}
+.gallery-card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0,0,0,.45);
+    line-height: 1.25;
+}
+.gallery-card-author {
+    font-size: .8rem;
+    color: rgba(255,255,255,.75);
+    margin-top: .2rem;
+}
+.gallery-like-count {
+    background: rgba(255,255,255,.92);
+    border-radius: 999px;
+    padding: .25rem .75rem;
+    font-size: .8rem;
+    font-weight: 600;
+    color: #4A3050;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+}
+.gallery-like-count::before {
+    content: '♥';
+    font-size: .7rem;
+    color: #C0392B;
+}
+.gallery-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .65rem 1rem;
+}
+.gallery-card-date {
+    font-size: .8rem;
+    color: #A58A99;
+}
+
+/* ── Like button ───────────────────────────────────────── */
+.like-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    border-radius: 999px;
+    padding: .45rem 1.1rem;
+    font-size: .8rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform .15s, background .2s, box-shadow .2s;
+    letter-spacing: .01em;
+}
+.like-btn:hover {
+    transform: translateY(-1px);
+}
+.like-btn:active {
+    transform: scale(.95);
+}
+.like-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    transition: transform .2s;
+}
+.like-btn:hover svg {
+    transform: scale(1.2);
+}
+/* unliked state */
+.like-btn.unliked {
+    color: #C0392B;
+    background: #FAEAEA;
+    box-shadow: none;
+}
+.like-btn.unliked:hover {
+    background: #F5D5D8;
+    box-shadow: 0 4px 14px rgba(192, 57, 43, 0.15);
+}
+/* liked / active state */
+.like-btn.liked {
+    color: #fff;
+    background: linear-gradient(135deg, #C0392B, #A62F24);
+    box-shadow: 0 6px 18px rgba(192, 57, 43, 0.28);
+}
+.like-btn.liked:hover {
+    background: linear-gradient(135deg, #A62F24, #8E2018);
+    box-shadow: 0 8px 22px rgba(192, 57, 43, 0.35);
+}
+/* heart SVG path fill for liked */
+.like-btn.liked svg path {
+    fill: #fff;
+    stroke: none;
+}
+.like-btn.unliked svg path {
+    fill: none;
+    stroke: #C0392B;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* like pop animation */
+@keyframes likePoP {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.45); }
+    70%  { transform: scale(.88); }
+    100% { transform: scale(1); }
+}
+.like-btn.pop svg {
+    animation: likePoP .35s ease forwards;
+}
+
+/* ── Lightbox ──────────────────────────────────────────── */
+#lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(10, 4, 14, 0.92);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    cursor: zoom-out;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+#lightbox.open {
+    display: flex;
+    animation: lbFadeIn .22s ease;
+}
+@keyframes lbFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+#lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 1.5rem;
+    object-fit: contain;
+    box-shadow: 0 40px 100px rgba(0,0,0,.65);
+    cursor: default;
+    animation: lbImgIn .28s cubic-bezier(.22,.68,0,1.2);
+}
+@keyframes lbImgIn {
+    from { opacity: 0; transform: scale(.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+#lightbox-close {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.5rem;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.18);
+    color: #fff;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, transform .15s;
+    z-index: 10000;
+}
+#lightbox-close:hover {
+    background: rgba(255,255,255,.24);
+    transform: scale(1.1);
+}
+#lightbox-caption {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,.75);
+    font-size: .85rem;
+    letter-spacing: .04em;
+    text-align: center;
+    pointer-events: none;
+    white-space: nowrap;
+}
