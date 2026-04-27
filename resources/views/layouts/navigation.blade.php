@@ -12,9 +12,6 @@
                         <div class="font-[Cormorant_Garamond] text-2xl font-semibold leading-none tracking-wide text-[#1C1020]">
                             {{ config('app.name', 'Techné') }}
                         </div>
-                        <div class="mt-1 text-[11px] uppercase tracking-[0.24em] text-[#8A7090]">
-                            Workspace
-                        </div>
                     </div>
                 </a>
 
