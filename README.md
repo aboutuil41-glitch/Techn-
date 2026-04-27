@@ -82,3 +82,8 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
 php artisan serve
+```
+---
+## Creator message.
+
+I've done what i could there's many more ideas i have for this web, but if i started adding i'll end up with god knows what.
